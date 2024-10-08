@@ -115,9 +115,17 @@ class Evaluate:
     def evaluate_model_with_mape(self):
         return mean_absolute_percentage_error(self.actual.flatten(), self.predictions.flatten())
 
-def build_lstm(etl: ETL, epochs=25, batch_size=32) -> tf.keras.Model:
+def build_lstm(etl: ETL, epochs=50, batch_size=32, progress_bar=None) -> tf.keras.Model:
     n_timesteps, n_features, n_outputs = 5, 1, 5
-    callbacks = [tf.keras.callbacks.EarlyStopping(patience=10, restore_best_weights=True)]
+    class ProgressCallback(tf.keras.callbacks.Callback):
+        def on_epoch_end(self, epoch, logs=None):
+            if progress_bar:
+                progress_bar.progress((epoch + 1) / epochs)
+    
+    callbacks = [
+        tf.keras.callbacks.EarlyStopping(patience=20, restore_best_weights=True),
+        ProgressCallback()
+    ]
     model = Sequential()
     model.add(LSTM(200, activation='relu', input_shape=(n_timesteps, n_features)))
     model.add(Dense(50, activation='relu'))
@@ -146,11 +154,15 @@ st.write('Select a stock ticker and train the model to predict future stock pric
 
 tickers = ['META', 'NVDA', 'AAPL']
 selected_ticker = st.selectbox('Select Stock Ticker', tickers)
+custom_ticker = st.text_input('Or enter a custom stock ticker (e.g., GOOG)')
+
+ticker = custom_ticker if custom_ticker else selected_ticker
 
 if st.button('Train Model'):
-    st.write(f'Training model for {selected_ticker}...')
-    data = ETL(selected_ticker)
-    model, history = build_lstm(data)
+    st.write(f'Training model for {ticker}...')
+    progress_bar = st.progress(0)
+    data = ETL(ticker)
+    model, history = build_lstm(data, progress_bar=progress_bar)
     baseline_preds = PredictAndForecast(model, data.train, data.test)
     baseline_evals = Evaluate(data.test, baseline_preds.predictions)
     st.write(f'MAPE: {baseline_evals.mape}')
@@ -161,10 +173,10 @@ if st.button('Train Model'):
 
 if 'model' in st.session_state:
     if st.button('Show Predictions'):
-        plot_results(st.session_state['data'].test, st.session_state['predictions'], st.session_state['data'].df, title_suffix=selected_ticker)
+        plot_results(st.session_state['data'].test, st.session_state['predictions'], st.session_state['data'].df, title_suffix=ticker)
 
     if st.button('Download Model'):
-        model_filename = f'{selected_ticker}_lstm_model.pkl'
+        model_filename = f'{ticker}_lstm_model.pkl'
         with open(model_filename, 'wb') as f:
             pickle.dump(st.session_state['model'], f)
         st.download_button('Download Trained Model', data=open(model_filename, 'rb'), file_name=model_filename)
