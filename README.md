@@ -2,11 +2,14 @@
 
 This project uses Long Short-Term Memory (LSTM) networks to predict stock prices. It features an ETL (Extract, Transform, Load) pipeline, model building, prediction, and evaluation functionalities, all wrapped in a Streamlit web application.
 
+<<<<<<< HEAD
 ## DEMO
 
 ![Demo](media/demo.gif)
 
 
+=======
+>>>>>>> 4036dbc9509ac9885d947338b3c8fa3333389ce0
 ## Features
 
 - *Data Extraction*: Fetch historical stock data using yfinance.
@@ -14,11 +17,16 @@ This project uses Long Short-Term Memory (LSTM) networks to predict stock prices
 - *Model Training*: Train LSTM model using TensorFlow and Keras.
 - *Prediction*: Generate stock price predictions.
 - *Evaluation*: Evaluate the model using MAPE and variance ratio.
+<<<<<<< HEAD
 - *Streamlit Interface*: User-friendly interface for selecting stocks, training models, viewing predictions and download trained model.
+=======
+- *Streamlit Interface*: User-friendly interface for selecting stocks, training models, and viewing predictions.
+>>>>>>> 4036dbc9509ac9885d947338b3c8fa3333389ce0
 
 ## Installation
 
 1. Clone the repository:
+<<<<<<< HEAD
     
     ```sh
     git clone https://github.com/DecX-x/LSTM_Stock-Prediction.git
@@ -30,14 +38,29 @@ This project uses Long Short-Term Memory (LSTM) networks to predict stock prices
     ```sh
     pip install -r requirements.txt
     ```
+=======
+    sh
+    git clone https://github.com/DecX-x/LSTM_Stock-Prediction.git
+    cd LSTM_Stock-Prediction
+    
+
+2. Install the required dependencies:
+    sh
+    pip install -r requirements.txt
+>>>>>>> 4036dbc9509ac9885d947338b3c8fa3333389ce0
     
 
 ## Usage
 
 1. Run the Streamlit application:
+<<<<<<< HEAD
     ```sh
     streamlit run app.py
     ```
+=======
+    sh
+    streamlit run app.py
+>>>>>>> 4036dbc9509ac9885d947338b3c8fa3333389ce0
     
 
 2. Select a stock ticker from the dropdown menu or enter a custom ticker.
@@ -46,8 +69,11 @@ This project uses Long Short-Term Memory (LSTM) networks to predict stock prices
 
 4. View the predictions and evaluation metrics.
 
+<<<<<<< HEAD
 5. Click "Download Model" to save the trained model.
 
+=======
+>>>>>>> 4036dbc9509ac9885d947338b3c8fa3333389ce0
 ## File Overview
 
 - *app.py*: Main application file containing the ETL process, LSTM model, prediction, evaluation, and Streamlit interface.
@@ -87,4 +113,10 @@ Evaluates the performance of the prediction model.
 - build_lstm(etl: ETL, epochs=50, batch_size=32, progress_bar=None) -> tf.keras.Model
 - plot_results(test, preds, df, title_suffix=None, xlabel='Stock Price')
 
+<<<<<<< HEAD
 --- 
+=======
+---
+
+Feel free to customize this README.md file further to better suit your project.
+>>>>>>> 4036dbc9509ac9885d947338b3c8fa3333389ce0
