@@ -1,3 +1,5 @@
+.gitignore
 final.py
 demo.py
 model.py
+media/
