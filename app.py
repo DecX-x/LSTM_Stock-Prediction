@@ -127,8 +127,10 @@ def build_lstm(etl: ETL, epochs=50, batch_size=32, progress_bar=None) -> tf.kera
         ProgressCallback()
     ]
     model = Sequential()
-    model.add(LSTM(200, activation='relu', input_shape=(n_timesteps, n_features)))
+    model.add(LSTM(300, activation='relu', input_shape=(n_timesteps, n_features)))
+    model.add(Dense(100, activation='relu'))
     model.add(Dense(50, activation='relu'))
+    model.add(Dense(25, activation='relu'))
     model.add(Dense(n_outputs))
     model.compile(optimizer='adam', loss='mse', metrics=['mae', 'mape'])
     history = model.fit(etl.X_train, etl.y_train, batch_size=batch_size, epochs=epochs, validation_data=(etl.X_test, etl.y_test), verbose=1, callbacks=callbacks)
@@ -152,7 +154,7 @@ def plot_results(test, preds, df, title_suffix=None, xlabel='Stock Price'):
 st.title('Stock Price Prediction with LSTM')
 st.write('Select a stock ticker and train the model to predict future stock prices.')
 
-tickers = ['META', 'NVDA', 'AAPL']
+tickers = ['META', 'NVDA', 'AAPL', 'BTC-USD', 'ETH-USD', 'LSK-USD', 'SOL-USD', 'BNB-USD']
 selected_ticker = st.selectbox('Select Stock Ticker', tickers)
 custom_ticker = st.text_input('Or enter a custom stock ticker (e.g., GOOG)')
 
