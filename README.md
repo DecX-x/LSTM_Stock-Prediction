@@ -2,6 +2,10 @@
 
 This project uses Long Short-Term Memory (LSTM) networks to predict stock prices. It features an ETL (Extract, Transform, Load) pipeline, model building, prediction, and evaluation functionalities, all wrapped in a Streamlit web application.
 
+## Demo
+
+![LSTM Stock Prediction](media/demo.gif)
+
 ## Features
 
 - *Data Extraction*: Fetch historical stock data using yfinance.
